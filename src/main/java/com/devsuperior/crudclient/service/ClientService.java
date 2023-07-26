@@ -51,4 +51,22 @@ public class ClientService {
 
     }
 
+    @Transactional
+    public ClientDTO update (Long id, ClientDTO clientDTO){
+
+        if (!clientRespository.existsById(id))
+            throw new ResourceNotFoundException("Id não encontrado");
+
+        Client client = clientRespository.getReferenceById(id);
+        client.setName(clientDTO.getName());
+        client.setCpf(clientDTO.getCpf());
+        client.setIncome(clientDTO.getIncome());
+        client.setBirthDate(clientDTO.getBirthDate());
+        client.setChildren(clientDTO.getChildren());
+
+        return new ClientDTO(clientRespository.save(client));
+
+
+    }
+
 }
