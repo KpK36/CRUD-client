@@ -1,6 +1,8 @@
 package com.devsuperior.crudclient.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
@@ -11,6 +13,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String cpf;
     private Double income; // renda
@@ -49,6 +52,10 @@ public class Client {
         return cpf;
     }
 
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     public Double getIncome() {
         return income;
     }
@@ -59,6 +66,10 @@ public class Client {
 
     public LocalDate getBirthDate() {
         return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public Integer getChildren() {
