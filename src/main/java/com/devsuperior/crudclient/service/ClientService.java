@@ -32,7 +32,7 @@ public class ClientService {
     @Transactional
     public ClientDTO findById (Long id) {
         return new ClientDTO(clientRespository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Id não encontrado")
+                () -> new ResourceNotFoundException("Id não existe")
         ));
 
     }
@@ -55,7 +55,7 @@ public class ClientService {
     public ClientDTO update (Long id, ClientDTO clientDTO){
 
         if (!clientRespository.existsById(id))
-            throw new ResourceNotFoundException("Id não encontrado");
+            throw new ResourceNotFoundException("Id não existe");
 
         Client client = clientRespository.getReferenceById(id);
         client.setName(clientDTO.getName());
@@ -66,6 +66,15 @@ public class ClientService {
 
         return new ClientDTO(clientRespository.save(client));
 
+    }
+
+    @Transactional
+    public void delete (Long id){
+
+        if (!clientRespository.existsById(id))
+            throw new ResourceNotFoundException("Id não existe");
+
+        clientRespository.deleteById(id);
 
     }
 

@@ -3,7 +3,6 @@ package com.devsuperior.crudclient.controller;
 import com.devsuperior.crudclient.dto.ClientDTO;
 import com.devsuperior.crudclient.service.ClientService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,12 +43,18 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientDTO> update (@RequestBody ClientDTO clientDTO,
+    public ResponseEntity<ClientDTO> update (@Valid @RequestBody ClientDTO clientDTO,
                                              @PathVariable Long id){
 
         return ResponseEntity.ok(clientService.update(id, clientDTO));
 
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete (@PathVariable Long id){
+
+        clientService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 }
